@@ -40,6 +40,11 @@ class ElevatorLogic(object):
         else:
             self.call_dict[direction].append(floor)
 
+    def is_on_path(self, floor, direction):
+        if self.callbacks.motor_direction == direction:
+            return self.destination_floor > floor if direction == UP else self.destination_floor < floor
+        return False
+
     def on_floor_selected(self, floor):
         """
         This is called when somebody on the elevator chooses a floor.
