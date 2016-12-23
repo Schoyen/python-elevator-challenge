@@ -34,9 +34,10 @@ class ElevatorLogic(object):
 
         if self.is_idle(): # Base case
             self.destination_floor = floor
-            self.callbacks.motor_direction = direction
+            self.callbacks.motor_direction = UP if floor >= self.callbacks.current_floor else DOWN
         elif self.is_on_path(floor, direction):
             self.call_dict[self.callbacks.motor_direction].append(self.destination_floor)
+            self.destination_floor = floor
         else:
             self.call_dict[direction].append(floor)
 
