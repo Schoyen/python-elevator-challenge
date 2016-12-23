@@ -31,7 +31,14 @@ class ElevatorLogic(object):
         floor: the floor that the elevator is being called to
         direction: the direction the caller wants to go, up or down
         """
-        self.destination_floor = floor
+
+        if self.is_idle(): # Base case
+            self.destination_floor = floor
+            self.callbacks.motor_direction = direction
+        elif self.is_on_path(floor, direction):
+            self.call_dict[self.callbacks.motor_direction].append(self.destination_floor)
+        else:
+            self.call_dict[direction].append(floor)
 
     def on_floor_selected(self, floor):
         """
