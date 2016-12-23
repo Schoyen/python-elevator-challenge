@@ -20,6 +20,7 @@ class ElevatorLogic(object):
         # Feel free to add any instance variables you want.
         self.destination_floor = None
         self.callbacks = None
+        self.call_dict = {UP: [], DOWN: []}
 
     def on_called(self, floor, direction):
         """
