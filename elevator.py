@@ -58,7 +58,7 @@ class ElevatorLogic(object):
 
         floor: the floor that was requested
         """
-        self.destination_floor = floor
+        pass
 
     def on_floor_changed(self):
         """
