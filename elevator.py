@@ -77,3 +77,30 @@ class ElevatorLogic(object):
             self.callbacks.motor_direction = UP
         elif self.destination_floor < self.callbacks.current_floor:
             self.callbacks.motor_direction = DOWN
+
+
+class TestElevator:
+
+    def setup(self):
+        class EmptyCallback:
+            def __init__(self, direction=None, current_floor=None):
+                self.motor_direction = direction
+                self.current_floor = current_floor
+        self.empty_callback = EmptyCallback()
+        self.callback = EmptyCallback(direction=UP)
+
+    def test_is_idle(self):
+        elevator_logic = ElevatorLogic()
+        elevator_logic.callbacks = self.empty_callback
+        assert elevator_logic.is_idle() # Should be idle
+        elevator_logic.callbacks = self.callback
+        assert not elevator_logic.is_idle() # Should not be idle
+
+    def test_is_on_path(self):
+        elevator_logic = ElevatorLogic()
+        elevator_logic.callbacks = self.callback
+        elevator_logic.destination_floor = 5
+        assert elevator_logic.is_on_path(4, UP) # Should be on path
+        assert not elevator_logic.is_on_path(4, DOWN) # Should not be on path
+        elevator_logic.callbacks.current_floor = 5
+        assert not elevator_logic.is_on_path(5, UP) # Should not be on path
