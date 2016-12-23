@@ -45,6 +45,10 @@ class ElevatorLogic(object):
             return self.destination_floor > floor if direction == UP else self.destination_floor < floor
         return False
 
+    def is_idle(self):
+        return all([True if not self.call_dict[key] else False for key in self.call_dict]) and \
+               not self.destination_floor and not self.callbacks.motor_direction
+
     def on_floor_selected(self, floor):
         """
         This is called when somebody on the elevator chooses a floor.
