@@ -74,18 +74,15 @@ class ElevatorLogic(object):
             self.callbacks.motor_direction = None
 
     def set_new_destination(self):
-        try:
-            candidates = self.call_dict[self.callbacks.motor_direction]
-            if not candidates:
-                self.destination_floor = None
-            elif self.callbacks.motor_direction == UP:
-                self.destination_floor = min(candidates)
-                self.call_dict[self.callbacks.motor_direction].remove(self.destination_floor)
-            elif self.callbacks.motor_direction == DOWN:
-                self.destination_floor = max(candidates)
-                self.call_dict[self.callbacks.motor_direction].remove(self.destination_floor)
-        except KeyError: # Bug
+        candidates = self.call_dict[self.callbacks.motor_direction]
+        if not candidates:
             self.destination_floor = None
+        elif self.callbacks.motor_direction == UP:
+            self.destination_floor = min(candidates)
+            self.call_dict[self.callbacks.motor_direction].remove(self.destination_floor)
+        elif self.callbacks.motor_direction == DOWN:
+            self.destination_floor = max(candidates)
+            self.call_dict[self.callbacks.motor_direction].remove(self.destination_floor)
 
     def on_ready(self):
         """
