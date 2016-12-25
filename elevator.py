@@ -65,14 +65,12 @@ class ElevatorLogic(object):
         This lets you know that the elevator has moved one floor up or down.
         You should decide whether or not you want to stop the elevator.
         """
-        if self.destination_floor == self.callbacks.current_floor:
-            self.set_new_destination()
-            self.callbacks.motor_direction = None
-        elif self.callbacks.current_floor == 1 and self.callbacks.motor_direction == DOWN:
-            self.set_new_destination()
-            self.callbacks.motor_direction = None
-        elif self.callbacks.current_floor == FLOOR_COUNT and self.callbacks.motor_direction == UP:
-            self.set_new_destination()
+        if self.destination_floor == self.callbacks.current_floor or \
+            self.callbacks.current_floor == 1 and self.callbacks.motor_direction == DOWN or \
+            self.callbacks.current_floor == FLOOR_COUNT and self.callbacks.motor_direction == UP:
+
+            if self.callbacks.motor_direction:
+                self.set_new_destination()
             self.callbacks.motor_direction = None
 
     def set_new_destination(self):
